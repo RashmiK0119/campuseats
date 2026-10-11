@@ -82,6 +82,10 @@ builder.Services
 // Authorization
 builder.Services.AddAuthorization();
 
+builder.Services.AddCors(o => o.AddPolicy("Frontend", p =>
+    p.WithOrigins("https://campuseats-murex.vercel.app")
+     .AllowAnyHeader().AllowAnyMethod()));
+
 // Build Application
 var app = builder.Build();
 
@@ -93,6 +97,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("Frontend");
 
 // IMPORTANT:
 // Authentication must come BEFORE Authorization
